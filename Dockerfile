@@ -18,7 +18,7 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 
 # Expose the SSH port and VNC port
 EXPOSE 22
-EXPOSE 5900
+EXPOSE 5901
 
 # Copy and set the entrypoint script
 COPY start-services.sh /usr/local/bin/start-services.sh
