@@ -6,9 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -24,18 +22,17 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
-    - name: Build the Docker image with timestamp tag
-      id: build
+    - name: Build and push Docker image for multiple architectures
       run: |
         TIMESTAMP=$(date +%s)
-        docker build . --file Dockerfile --tag ghcr.io/${{ github.repository }}/ubuntuxfce:${TIMESTAMP}
-        echo "::set-output name=timestamp::${TIMESTAMP}"
-
-    - name: Tag the Docker image as latest
-      run: docker tag ghcr.io/${{ github.repository }}/ubuntuxfce:${{ steps.build.outputs.timestamp }} ghcr.io/${{ github.repository }}/ubuntuxfce:latest
-
-    - name: Push the Docker image with timestamp tag
-      run: docker push ghcr.io/${{ github.repository }}/ubuntuxfce:${{ steps.build.outputs.timestamp }}
-
-    - name: Push the Docker image with latest tag
-      run: docker push ghcr.io/${{ github.repository }}/ubuntuxfce:latest
+        LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+        IMAGE_NAME="ghcr.io/${LOWERCASE_REPO}/ubuntuxfce"
+        TAG="${TIMESTAMP}"
+        
+        # Create a new Buildx builder instance if needed
+        docker buildx create --name mybuilder --use
+        
+        # Build and push multi-architecture image
+        docker buildx build --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --file Dockerfile --tag "${IMAGE_NAME}:${TAG}" --tag "${IMAGE_NAME}:latest" --push .
+        
+        echo "Built and pushed multi-architecture image ${IMAGE_NAME}:${TAG} and ${IMAGE_NAME}:latest"
