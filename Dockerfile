@@ -11,18 +11,20 @@ RUN echo "root:changeme" | chpasswd
 RUN apt update && apt upgrade -y
 
 # Install XFCE, XFCE Goodies, OpenSSH server, and additional packages
-RUN apt install -y xfce4 xfce4-goodies openssh-server xvfb tigervnc-scraping-server
+RUN apt install -y xfce4 xfce4-goodies openssh-server tigervnc-standalone-server
 
 # Configure the SSH server to allow root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # Expose the SSH port and VNC port
 EXPOSE 22
-EXPOSE 5901
+EXPOSE 5900
 
 # Copy and set the entrypoint script
 COPY start-services.sh /usr/local/bin/start-services.sh
+COPY xstartup /root/.vnc/xstartup
 RUN chmod +x /usr/local/bin/start-services.sh
+RUN chmod +x /root/.vnc/xstartup
 
 # Set the entrypoint
 ENTRYPOINT ["/usr/local/bin/start-services.sh"]
