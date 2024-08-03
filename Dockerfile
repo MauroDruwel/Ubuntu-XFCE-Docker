@@ -23,4 +23,4 @@ RUN echo "geometry=1920x1080" >> /etc/xrdp/xrdp.ini
 EXPOSE 3389
 
 # Start the services
-CMD ["/bin/bash", "-c", "service xrdp restart && tail -f /dev/null"]
+CMD ["/bin/bash", "-c", "/etc/xrdp/startwm.sh && service xrdp restart && tail -f /dev/null"]
