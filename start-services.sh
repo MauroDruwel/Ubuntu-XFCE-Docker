@@ -3,17 +3,18 @@
 # Start the SSH server
 service ssh start
 
-# Start the XFCE desktop environment
+# Set the desired resolution with Xvfb
+Xvfb :1 -screen 0 1920x1080x24 &
+
+# Start XFCE desktop environment
 export DISPLAY=:1
 startxfce4 &
 
-# Set up VNC server
-vncserver :1 -geometry 1920x1080 -depth 24
-vncpasswd -f <<< "changeme" > ~/.vnc/passwd
-chmod 600 ~/.vnc/passwd
-
-# Start the VNC server
-vncserver :1 -geometry 1920x1080 -depth 24 -rfbport 5901
+# Configure and start x11vnc with a password and on port 5900
+mkdir -p /root/.vnc
+x11vnc -storepasswd changeme /root/.vnc/passwd
+chmod 600 /root/.vnc/passwd
+x11vnc -display :1 -forever -passwdfile /root/.vnc/passwd -rfbport 5900 &
 
 # Keep the script running
 while true; do
