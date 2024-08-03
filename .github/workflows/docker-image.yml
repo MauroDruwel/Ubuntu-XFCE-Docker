@@ -24,7 +24,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-
+    
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+      
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -42,13 +45,14 @@ jobs:
         file: ./Dockerfile
         platforms: ${{ matrix.platform }}
         push: true
-        tags: ghcr.io/${{ github.repository }}/ubuntuxfce:${{ matrix.platform }},ghcr.io/${{ github.repository }}/ubuntuxfce:latest
-        annotations: |
-          type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image
+        outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Ubuntu XFCE
+        # tags: ghcr.io/${{ github.repository }}/ubuntuxfce:${{ matrix.platform }},ghcr.io/${{ github.repository }}/ubuntuxfce:latest
+        # annotations: |
+        #   type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image
 
-    - name: Set latest tag for multi-arch image
-      if: ${{ matrix.platform == 'linux/amd64' }}
-      run: |
-        LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-        docker tag "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:${{ matrix.platform }}" "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:latest"
-        docker push "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:latest"
+    #- name: Set latest tag for multi-arch image
+    #  if: ${{ matrix.platform == 'linux/amd64' }}
+    #  run: |
+    #    LOWERCASE_REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+    #    docker tag "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:${{ matrix.platform }}" "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:latest"
+    #    docker push "ghcr.io/${LOWERCASE_REPO}/ubuntuxfce:latest"
