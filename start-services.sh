@@ -12,7 +12,7 @@ startxfce4 &
 
 # Configure and start x11vnc with a password and on port 5900
 mkdir -p /root/.vnc
-echo changeme | vncpasswd -f > /rppt/.vnc/passwd
+echo changeme | vncpasswd -f > /root/.vnc/passwd
 chmod 600 /root/.vnc/passwd
 
 vncserver
