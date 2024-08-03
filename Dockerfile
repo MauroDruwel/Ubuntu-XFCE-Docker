@@ -16,6 +16,9 @@ RUN apt install -y xfce4 xfce4-goodies xrdp
 # Configure XRDP to use XFCE session
 RUN echo "xfce4-session" > /root/.xsession
 
+# Configure XRDP to use a fixed screen resolution
+RUN echo "geometry=1920x1080" >> /etc/xrdp/xrdp.ini
+
 # Expose the XRDP port
 EXPOSE 3389
 
