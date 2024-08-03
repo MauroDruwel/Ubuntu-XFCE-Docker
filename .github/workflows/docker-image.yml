@@ -37,6 +37,10 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set username lowercase
+      run: |
+        LOWERCASE_ACTOR=$(echo "${{ github.actor }}" | tr '[:upper:]' '[:lower:]')
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
@@ -46,7 +50,7 @@ jobs:
         platforms: ${{ matrix.platform }}
         push: true
         outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Ubuntu XFCE
-        tags: ghcr.io/${{ github.actor }}/ubuntuxfce:latest
+        tags: ghcr.io/${LOWERCASE_ACTOR}/ubuntuxfce:latest
         # tags: ghcr.io/${{ github.repository }}/ubuntuxfce:${{ matrix.platform }},ghcr.io/${{ github.repository }}/ubuntuxfce:latest
         # annotations: |
         #   type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image
