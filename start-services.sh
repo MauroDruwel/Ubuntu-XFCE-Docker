@@ -10,8 +10,11 @@ Xvfb :1 -screen 0 1920x1080x24 &
 export DISPLAY=:1
 startxfce4 &
 
-# Start x11vnc to allow VNC access (optional, adjust as needed)
-x11vnc -display :1 -N -forever &
+# Configure and start x11vnc with a password and on port 5900
+mkdir -p /root/.vnc
+echo "changeme" | vncpasswd -f > /root/.vnc/passwd
+chmod 600 /root/.vnc/passwd
+x11vnc -display :1 -forever -passwdfile /root/.vnc/passwd -rfbport 5900 &
 
 # Keep the script running
 while true; do
