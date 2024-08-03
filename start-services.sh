@@ -11,10 +11,11 @@ export DISPLAY=:1
 startxfce4 &
 
 # Configure and start x11vnc with a password and on port 5900
-mkdir -p /root/.vnc
-echo "changeme" | vncpasswd -f > /root/.vnc/passwd
-chmod 600 /root/.vnc/passwd
-x11vnc -display :1 -forever -passwdfile /root/.vnc/passwd -rfbport 5900 &
+# Create a password file for x11vnc
+echo "changeme" | x11vnc -storepasswd -passwdfile /root/.vnc/passwd
+
+# Start x11vnc with the specified password and port
+x11vnc -display :1 -forever -rfbport 5900 -passwdfile /root/.vnc/passwd &
 
 # Keep the script running
 while true; do
