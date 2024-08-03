@@ -19,6 +19,9 @@ RUN echo "xfce4-session" > /root/.xsession
 # Configure XRDP to use a fixed screen resolution
 RUN echo "geometry=1920x1080" >> /etc/xrdp/xrdp.ini
 
+# Modify the SSH configuration to allow root login
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
 # Expose the XRDP and SSH ports
 EXPOSE 3389 22
 
