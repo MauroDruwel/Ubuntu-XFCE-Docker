@@ -29,5 +29,8 @@ EXPOSE 3389 22
 COPY start-services.sh /usr/local/bin/start-services.sh
 RUN chmod +x /usr/local/bin/start-services.sh
 
+COPY xrdpconnect.sh /usr/local/bin/xrdpconnect.sh
+RUN chmod +x /usr/local/bin/xrdpconnect.sh
+
 # Set the entrypoint
 ENTRYPOINT ["/usr/local/bin/start-services.sh"]

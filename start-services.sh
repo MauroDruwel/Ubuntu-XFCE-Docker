@@ -6,8 +6,9 @@ service ssh start
 # Start XRDP service
 service xrdp start
 
+sleep 5
 # Start the XFCE session
-startxfce4 &
+/usr/local/bin/xrdpconnect.sh
 
 # Wait for a few seconds to ensure XFCE has started
 sleep 5
