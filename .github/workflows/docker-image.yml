@@ -46,4 +46,4 @@ jobs:
         platforms: ${{ matrix.platform }}
         push: true
         outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Ubuntu XFCE
-        tags: ghcr.io/maurodruwel/ubuntuxfce:latest
+        tags: ghcr.io/maurodruwel/ubuntuxfce
