@@ -22,5 +22,9 @@ RUN echo "geometry=1920x1080" >> /etc/xrdp/xrdp.ini
 # Expose the XRDP and SSH ports
 EXPOSE 3389 22
 
-# Start the services
-CMD ["/bin/bash", "-c", "service ssh start && /etc/xrdp/startwm.sh && service xrdp restart && tail -f /dev/null"]
+# Copy and set the entrypoint script
+COPY start-services.sh /usr/local/bin/start-services.sh
+RUN chmod +x /usr/local/bin/start-services.sh
+
+# Set the entrypoint
+ENTRYPOINT ["/usr/local/bin/start-services.sh"]
