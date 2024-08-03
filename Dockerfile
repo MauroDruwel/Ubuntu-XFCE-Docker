@@ -11,7 +11,7 @@ RUN echo "root:changeme" | chpasswd
 RUN apt update && apt upgrade -y
 
 # Install XFCE, XFCE Goodies, XRDP, and OpenSSH server
-RUN apt install -y xfce4 xfce4-goodies xrdp openssh-server
+RUN apt install -y xfce4 xfce4-goodies xrdp openssh-server freerdp2-x11
 
 # Configure XRDP to use XFCE session
 RUN echo "xfce4-session" > /root/.xsession
