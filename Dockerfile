@@ -10,7 +10,7 @@ RUN echo "root:changeme" | chpasswd
 # Update and upgrade the system
 RUN apt update && apt upgrade -y
 
-# Install XFCE, XFCE Goodies, OpenSSH server, and additional packages
+# Install XFCE, XFCE Goodies, OpenSSH server, and tigervnc
 RUN apt install -y xfce4 xfce4-goodies openssh-server tigervnc-standalone-server
 
 # Configure the SSH server to allow root login
