@@ -7,7 +7,7 @@ service ssh start
 echo changeme | vncpasswd -f > /root/.vnc/passwd
 chmod 600 /root/.vnc/passwd
 
-vncserver -fg -depth 24 -geometry 1920x1080 -localhost no :1
+vncserver -fg -depth 24 -geometry 1920x1080 -localhost no :0
 # Start x11vnc with the configured display and password
 #x11vnc -display :1 -forever -passwdfile /root/.vnc/passwd -rfbport 5900 &
 
