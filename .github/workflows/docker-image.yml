@@ -38,6 +38,13 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Set platform name
+      id: set-platform
+      run: |
+        # Extract the last part of the platform
+        LAST_PART=$(echo "${{ matrix.platform }}" | awk -F'/' '{print $NF}')
+        echo "PLATFORM_LAST_PART=$LAST_PART" >> $GITHUB_ENV
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v6
       with:
@@ -46,4 +53,4 @@ jobs:
         platforms: ${{ matrix.platform }}
         push: true
         outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Ubuntu XFCE
-        tags: ghcr.io/maurodruwel/ubuntuxfce:${{ matrix.platform }}
+        tags: ghcr.io/maurodruwel/ubuntuxfce:${{ env.PLATFORM_LAST_PART }}
