@@ -46,6 +46,7 @@ jobs:
         platforms: ${{ matrix.platform }}
         push: true
         outputs: type=image,name=target,annotation-index.org.opencontainers.image.description=Ubuntu XFCE
+        tags: ghcr.io/${{ github.actor }}/ubuntuxfce:latest
         # tags: ghcr.io/${{ github.repository }}/ubuntuxfce:${{ matrix.platform }},ghcr.io/${{ github.repository }}/ubuntuxfce:latest
         # annotations: |
         #   type=image,name=target,annotation-index.org.opencontainers.image.description=My multi-arch image
