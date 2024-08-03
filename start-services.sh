@@ -1,20 +1,19 @@
 #!/bin/bash
 
-# Start SSH service
+# Start the SSH server
 service ssh start
 
-# Start XRDP service
-service xrdp start
+# Set the desired resolution with Xvfb
+Xvfb :1 -screen 0 1920x1080x24 &
 
-sleep 5
-# Start the XFCE session
-/usr/local/bin/xrdpconnect.sh
+# Start XFCE desktop environment
+export DISPLAY=:1
+startxfce4 &
 
-# Wait for a few seconds to ensure XFCE has started
-sleep 5
+# Start x11vnc to allow VNC access (optional, adjust as needed)
+x11vnc -display :1 -N -forever &
 
-# Start Thunar file manager
-thunar &
-
-# Keep the container running
-tail -f /dev/null
+# Keep the script running
+while true; do
+    sleep 3600
+done
