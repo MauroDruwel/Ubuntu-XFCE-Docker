@@ -15,7 +15,7 @@ mkdir -p /root/.vnc
 echo changeme | vncpasswd -f > /root/.vnc/passwd
 chmod 600 /root/.vnc/passwd
 
-vncserver
+x0vncserver -passwordfile /root/.vnc/passwd -display :1
 # Start x11vnc with the configured display and password
 #x11vnc -display :1 -forever -passwdfile /root/.vnc/passwd -rfbport 5900 &
 

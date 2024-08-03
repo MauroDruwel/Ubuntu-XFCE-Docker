@@ -11,7 +11,7 @@ RUN echo "root:changeme" | chpasswd
 RUN apt update && apt upgrade -y
 
 # Install XFCE, XFCE Goodies, OpenSSH server, and additional packages
-RUN apt install -y xfce4 xfce4-goodies openssh-server xvfb tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer
+RUN apt install -y xfce4 xfce4-goodies openssh-server xvfb install tigervnc-scraping-server
 
 # Configure the SSH server to allow root login
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
